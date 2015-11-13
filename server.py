@@ -36,7 +36,7 @@ def set_voltage():
 	mutex.acquire()
 	#Do settings
 	psu = hy3020mr.Psu()
-	if psu.setVoltage(current):
+	if psu.setVoltage(voltage):
 		response = {"error": "success"}
 	else:
 		response = {"error": "failure"}
