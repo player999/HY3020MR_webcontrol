@@ -4,6 +4,7 @@ from bottle import route, run, post, request, static_file
 import threading
 import json
 import time
+import hy3020mr
 
 measuring_thread = None
 mutex = None
@@ -34,9 +35,11 @@ def set_voltage():
 	voltage = data["value"]
 	mutex.acquire()
 	#Do settings
+	if hy3020mr.setVoltage(current):
+		response = {"error": "success"}
+	else:
+		response = {"error": "failure"}
 	mutex.release()
-	print(voltage)
-	response = {"error": "success"}
 	return json.dumps(response)
 
 @post('/set_current')
@@ -47,9 +50,11 @@ def set_current():
 	current = data["value"]
 	mutex.acquire()
 	#Do settings
+	if hy3020mr.setCurrent(current):
+		response = {"error": "success"}
+	else:
+		response = {"error": "failure"}
 	mutex.release()
-	print(current)
-	response = {"error": "success"}
 	return json.dumps(response)
 
 class Measuring(threading.Thread):
@@ -62,9 +67,14 @@ class Measuring(threading.Thread):
 		global mutex
 		while 1:
 			mutex.acquire()
-			self.voltage += 1
-			self.current += 1
+			voltage,current = hy3020mr.getValues()
 			mutex.release()
+			if voltage == None:
+				self.voltage = 0
+				self.current = 0
+			else:
+				self.voltage = voltage
+				self.current = current
 			time.sleep(5)
 
 
