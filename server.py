@@ -35,7 +35,8 @@ def set_voltage():
 	voltage = data["value"]
 	mutex.acquire()
 	#Do settings
-	if hy3020mr.setVoltage(current):
+	psu = hy3020mr.Psu()
+	if psu.setVoltage(current):
 		response = {"error": "success"}
 	else:
 		response = {"error": "failure"}
@@ -50,7 +51,8 @@ def set_current():
 	current = data["value"]
 	mutex.acquire()
 	#Do settings
-	if hy3020mr.setCurrent(current):
+	psu = hy3020mr.Psu()
+	if psu.setCurrent(current):
 		response = {"error": "success"}
 	else:
 		response = {"error": "failure"}
@@ -60,6 +62,7 @@ def set_current():
 class Measuring(threading.Thread):
 	def __init__(self):
 		threading.Thread.__init__(self)
+		self.psu = hy3020mr.Psu()
 		self.voltage = 0
 		self.current = 0
 	def run(self):
@@ -67,7 +70,7 @@ class Measuring(threading.Thread):
 		global mutex
 		while 1:
 			mutex.acquire()
-			voltage,current = hy3020mr.getValues()
+			voltage,current = self.psu.getValues()
 			mutex.release()
 			if voltage == None:
 				self.voltage = 0
