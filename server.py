@@ -6,8 +6,8 @@ import json
 import time
 import hy3020mr
 
-measuring_thread = None
-mutex = None
+global measuring_thread
+global mutex 
 
 @route('/')
 def index():
@@ -82,8 +82,6 @@ class Measuring(threading.Thread):
 
 
 if __name__ == "__main__":
-	global measuring_thread
-	global mutex
 	mutex = threading.Lock()
 	measuring_thread = Measuring()
 	measuring_thread.start()
