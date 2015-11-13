@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HY3020MR power control</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script>
+    function set_voltage() {
+      var voltage = $("#input_voltage").val()
+      alert("Set voltage " + voltage);
+    }
+    function set_current() {
+      var current = $("#input_current").val()
+      alert("Set current " + current);
+    }
+    </script>
+  </head>
+  <body>
+    <h1>HY3020MR power control</h1>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <table>
+    
+    <tr>
+    <td width="100px">Voltage</td>
+    <td width="100px">00.0</td>
+    <td width="100px"><input size="4" type="text" id="input_voltage"></td>
+    <td><button onclick="set_voltage()" type="button" id="set_voltage">Set</button></td>
+    </tr>
+
+    <tr>
+    <td width="100px">Current</td>
+    <td width="100px">00.0</td>
+    <td width="100px"><input size="4" type="text" id="input_current"></td>
+    <td><button onclick="set_current()" type="button" id="set_current">Set</button></td>
+    </tr>
+    
+    </table>
+    <img  width="300px" src="img/HY3020MR.jpg"/>
+  </body>
+</html>
